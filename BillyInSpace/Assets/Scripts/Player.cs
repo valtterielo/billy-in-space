@@ -8,21 +8,24 @@ public class Player : MonoBehaviour
     int health = 3;
 
     [SerializeField]
-    float score = 0f;
+    int score = 0;
 
     [SerializeField]
     float multiplier = 1.0f;
 
     [SerializeField]
-    float speed = 5.0f;
+    float speed = 10.0f;
+
+    [SerializeField]
+    GameObject gameOverScreen;
 
     void Start()
     {
         //Pisteiden kasvattaminen alkaa 0.5 sekuntia pelin käynnistymisen
         //jälkeen ja päivittyy sekuntin välein
         InvokeRepeating("UpdateScore", 0.5f, 1f);
-        //Pistelukeman kerroin kasvaa 15 sekuntin välein
-        InvokeRepeating("IncreaseScoreMultiplier", 15f, 15f);
+        //Pistelukeman kerroin kasvaa 10 sekuntin välein
+        InvokeRepeating("IncreaseScoreMultiplier", 10f, 10f);
     }
 
     void FixedUpdate()
@@ -45,6 +48,7 @@ public class Player : MonoBehaviour
     void UpdateScore()
     {
         score = Mathf.RoundToInt(score + (10 * multiplier));
+        GameObject.Find("HUD").GetComponent<HudManager>().setScore(score);
     }
     void IncreaseScoreMultiplier()
     {
@@ -54,5 +58,12 @@ public class Player : MonoBehaviour
     public void DecreaseHealth()
     {
         health--;
+        GameObject.Find("HUD").GetComponent<HudManager>().setHealthbar(health);
+
+        if (health <= 0)
+        {
+            gameOverScreen.GetComponent<GameOver>().ActivateGameOver();
+            Destroy(gameObject);     
+        }
     }
 }
