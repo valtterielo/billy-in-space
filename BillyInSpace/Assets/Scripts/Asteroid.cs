@@ -9,7 +9,7 @@ public class Asteroid : MonoBehaviour
     {
         transform.position += Vector3.down * speed * Time.deltaTime;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Player>())
         {
@@ -17,7 +17,7 @@ public class Asteroid : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void OnBecameInvisible()
+    void OnBecameInvisible()
     {
         Destroy(gameObject);
     }
@@ -25,4 +25,5 @@ public class Asteroid : MonoBehaviour
     {
         speed = NewSpeed;
     }
+
 }

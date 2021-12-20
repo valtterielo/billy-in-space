@@ -7,6 +7,8 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     GameObject[] asteroids;
     [SerializeField]
+    GameObject coin;
+    [SerializeField]
     float asteroidBaseSpeed = 5f;
     void Start()
     {
@@ -18,6 +20,14 @@ public class Spawner : MonoBehaviour
         asteroidToSpawn.GetComponent<Asteroid>().setSpeed(asteroidBaseSpeed * Random.Range(0.65f, 1.4f));
         Instantiate(asteroidToSpawn, gameObject.transform.position, gameObject.transform.rotation);
     }
+
+    public void SpawnCoin()
+    {
+        var coinObject = coin;
+        coinObject.GetComponent<Coin>().setSpeed(asteroidBaseSpeed * Random.Range(0.65f, 1.4f));
+        Instantiate(coinObject, gameObject.transform.position, gameObject.transform.rotation);
+    }
+
     void IncreaseAsteroidSpeed()
     {
         if (asteroidBaseSpeed >= 10) return;

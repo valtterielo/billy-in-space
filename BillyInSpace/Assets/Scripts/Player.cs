@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -18,6 +19,15 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     GameObject gameOverScreen;
+
+    [SerializeField]
+    AudioClip hitSound;
+
+    [SerializeField]
+    Text coinText;
+
+    [SerializeField]
+    int coins;
 
     void Start()
     {
@@ -57,6 +67,10 @@ public class Player : MonoBehaviour
 
     public void DecreaseHealth()
     {
+        Vibration.Init();
+        Vibration.VibrateNope();
+        AudioSource.PlayClipAtPoint(hitSound, new Vector3(0, 0, -10));
+        GetComponent<SpriteFlash>().Flash();
         health--;
         GameObject.Find("HUD").GetComponent<HudManager>().setHealthbar(health);
 
@@ -65,5 +79,11 @@ public class Player : MonoBehaviour
             gameOverScreen.GetComponent<GameOver>().ActivateGameOver();
             Destroy(gameObject);     
         }
+    }
+
+    public void AddCoin()
+    {
+        coins++;
+        coinText.text = coins.ToString();
     }
 }
