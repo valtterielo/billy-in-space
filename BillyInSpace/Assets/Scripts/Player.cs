@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        var gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        GetComponent<SpriteRenderer>().sprite = gameManager.GetComponent<GameProperties>().GetCurrentSprite();
         //Pisteiden kasvattaminen alkaa 0.5 sekuntia pelin käynnistymisen
         //jälkeen ja päivittyy sekuntin välein
         InvokeRepeating("UpdateScore", 0.5f, 1f);
