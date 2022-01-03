@@ -26,16 +26,6 @@ public class Enemy : MonoBehaviour
         RotateTowardsTarget();
     }
 
-    void OnMouseDown()
-    {
-        Vibration.Init();
-        Vibration.VibratePop();
-        AudioSource.PlayClipAtPoint(deathSound, new Vector3(0, 0, -10), 0.7f);
-        var splatter = Instantiate(enemySplatter, gameObject.transform.position, gameObject.transform.rotation);
-        splatter.Play();
-        Destroy(gameObject);
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Player>())
@@ -61,8 +51,18 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
     }
 
-    public void setSpeed(float NewSpeed)
+    public void SetSpeed(float NewSpeed)
     {
         speed = NewSpeed;
+    }
+
+    public void KillEnemy()
+    {
+        Vibration.Init();
+        Vibration.VibratePop();
+        AudioSource.PlayClipAtPoint(deathSound, new Vector3(0, 0, -10), 0.7f);
+        var splatter = Instantiate(enemySplatter, gameObject.transform.position, gameObject.transform.rotation);
+        splatter.Play();
+        Destroy(gameObject);
     }
 }

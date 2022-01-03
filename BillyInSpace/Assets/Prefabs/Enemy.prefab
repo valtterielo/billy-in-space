@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4827150573234331855}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dc7499bd05d5a4288807a4cfea60f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6.5939746
+  speed: 7.134175
   enemySplatter: {fileID: 9193437029837335160}
   deathSound: {fileID: 8300000, guid: 0988400d85935784cafdec9c99b18ac4, type: 3}
 --- !u!82 &4827150573234331855

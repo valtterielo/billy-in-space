@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemy()
     {
         var enemyToSpawn = enemies[Random.Range(0, enemies.Length)];
-        enemyToSpawn.GetComponent<Enemy>().setSpeed(enemyBaseSpeed * Random.Range(0.8f, 1.2f));
+        enemyToSpawn.GetComponent<Enemy>().SetSpeed(enemyBaseSpeed * Random.Range(0.8f, 1.2f));
         Instantiate(enemyToSpawn, gameObject.transform.position, gameObject.transform.rotation);
     }
     void IncreaseEnemySpeed()
