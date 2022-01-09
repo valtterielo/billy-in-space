@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] Text coinText;
     [SerializeField] int coins;
     [SerializeField] Text shopMoney;
+    [SerializeField] TextMeshProUGUI endScoreText;
     [SerializeField] Camera cam;
     GameObject gameManager;
     Sprite playerSprite;
@@ -91,7 +93,7 @@ public class Player : MonoBehaviour
             gameOverScreen.GetComponent<GameOver>().ActivateGameOver();
             Destroy(gameObject);
             gameManager.GetComponent<GameProperties>().IncreaseMoney(coins);
-            shopMoney.text = gameManager.GetComponent<GameProperties>().GetTotalMoney().ToString();
+            endScoreText.text = $"Score: {score}";
             ES3AutoSaveMgr.Current.Save();
         }
     }
@@ -99,5 +101,11 @@ public class Player : MonoBehaviour
     {
         coins++;
         coinText.text = coins.ToString();
+    }
+
+    public void ZeroScoreAndMoney()
+    {
+        score = 0;
+        coins = 0;
     }
 }
