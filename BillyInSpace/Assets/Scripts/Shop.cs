@@ -31,6 +31,8 @@ public class Shop : MonoBehaviour
 
     public void Equip()
     {
+        Vibration.Init();
+        Vibration.VibrateNope();
         gameManager.GetComponent<GameProperties>().SetPlayerSprite(playerSprite.GetComponent<Image>().sprite);
     }
 

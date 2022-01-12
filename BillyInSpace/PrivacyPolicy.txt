@@ -1,0 +1,3 @@
+Billy in Space hasn't been programmed to store any player data, but game engine provider may collect some of your data.
+The collected data will mostly be used for statistics but Elopelit won't have access to your personal data :)
+See https://unity3d.com/legal/privacy-policy for more details of how Unity will use your data. 
