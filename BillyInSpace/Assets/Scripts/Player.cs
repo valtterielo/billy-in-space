@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI endScoreText;
     [SerializeField] Camera cam;
     GameObject gameManager;
+    GameObject adManager;
     Sprite playerSprite;
     bool enemyTouched;
 
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
     {
         ES3AutoSaveMgr.Current.Load();
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        adManager = GameObject.Find("Ads");
         playerSprite = gameManager.GetComponent<GameProperties>().GetCurrentSprite();
         Debug.Log("Current sprite is " + playerSprite);
         gameObject.GetComponent<SpriteRenderer>().sprite = playerSprite;
@@ -90,11 +92,13 @@ public class Player : MonoBehaviour
 
         if (health <= 0)
         {
+            ShowAd();
             gameOverScreen.GetComponent<GameOver>().ActivateGameOver();
-            Destroy(gameObject);
             gameManager.GetComponent<GameProperties>().IncreaseMoney(coins);
             endScoreText.text = $"Score: {score}";
+            gameObject.SetActive(false);
             ES3AutoSaveMgr.Current.Save();
+            
         }
     }
     public void AddCoin()
@@ -107,5 +111,20 @@ public class Player : MonoBehaviour
     {
         score = 0;
         coins = 0;
+    }
+
+    public void RewardDoubleCoins()
+    {
+        gameManager.GetComponent<GameProperties>().IncreaseMoney(coins);
+        ES3AutoSaveMgr.Current.Save();
+    }
+
+    void ShowAd()
+    {
+        if (gameManager.GetComponent<GameProperties>().playthroughs >= 3)
+        {
+            adManager.GetComponent<InterstitialAd>().ShowAd();
+            gameManager.GetComponent<GameProperties>().playthroughs = 0;
+        }
     }
 }

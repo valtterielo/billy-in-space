@@ -5,15 +5,24 @@ using UnityEngine.UI;
 
 public class GameProperties : MonoBehaviour
 {
-    //public static GameProperties instance;
     [SerializeField] Sprite currentPlayerSprite;
     [SerializeField] int totalMoney;
     [SerializeField] GameObject astronaut;
     [SerializeField] GameObject spawnerController;
     [SerializeField] GameObject startScreen;
     [SerializeField] Text shopMoney;
+    int coinsFromPlaythrough;
+    int _playThroughs = 0;
+
+    public int playthroughs
+    {
+        get { return _playThroughs; }
+        set { _playThroughs = value; }
+    }
+
     void Start()
     {
+        playthroughs++;
         ES3AutoSaveMgr.Current.Load();
         GameManager GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         astronaut.SetActive(GM.playerActive);
@@ -31,6 +40,12 @@ public class GameProperties : MonoBehaviour
     public void IncreaseMoney(int amount)
     {
         totalMoney += amount;
+        coinsFromPlaythrough = amount;
+        ES3AutoSaveMgr.Current.Save();
+    }
+    public void DoubleMoney()
+    {
+        totalMoney += coinsFromPlaythrough;
         ES3AutoSaveMgr.Current.Save();
     }
     public void SetPlayerSprite(Sprite sprite)
