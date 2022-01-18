@@ -11,18 +11,11 @@ public class GameProperties : MonoBehaviour
     [SerializeField] GameObject spawnerController;
     [SerializeField] GameObject startScreen;
     [SerializeField] Text shopMoney;
+    [SerializeField] Text gameOverMoneyText;
     int coinsFromPlaythrough;
-    int _playThroughs = 0;
-
-    public int playthroughs
-    {
-        get { return _playThroughs; }
-        set { _playThroughs = value; }
-    }
 
     void Start()
     {
-        playthroughs++;
         ES3AutoSaveMgr.Current.Load();
         GameManager GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         astronaut.SetActive(GM.playerActive);
@@ -46,6 +39,8 @@ public class GameProperties : MonoBehaviour
     public void DoubleMoney()
     {
         totalMoney += coinsFromPlaythrough;
+        gameOverMoneyText.text = $" + {coinsFromPlaythrough * 2}";
+        gameOverMoneyText.color = Color.yellow;
         ES3AutoSaveMgr.Current.Save();
     }
     public void SetPlayerSprite(Sprite sprite)

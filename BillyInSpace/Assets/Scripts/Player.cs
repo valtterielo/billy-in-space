@@ -15,21 +15,27 @@ public class Player : MonoBehaviour
     [SerializeField] Text coinText;
     [SerializeField] int coins;
     [SerializeField] Text shopMoney;
+    [SerializeField] Text gameOverMoneyText;
     [SerializeField] TextMeshProUGUI endScoreText;
     [SerializeField] Camera cam;
+    GameObject gameProperties;
     GameObject gameManager;
     GameObject adManager;
     Sprite playerSprite;
     bool enemyTouched;
 
+
     void Start()
     {
         ES3AutoSaveMgr.Current.Load();
-        gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        gameProperties = GameObject.Find("GameProperties");
+        gameManager = GameObject.Find("GameManager");
+        gameManager.GetComponent<GameManager>().playthroughs++;
         adManager = GameObject.Find("Ads");
-        playerSprite = gameManager.GetComponent<GameProperties>().GetCurrentSprite();
+        playerSprite = gameProperties.GetComponent<GameProperties>().GetCurrentSprite();
         Debug.Log("Current sprite is " + playerSprite);
         gameObject.GetComponent<SpriteRenderer>().sprite = playerSprite;
+
 
         InvokeRepeating("UpdateScore", 0.5f, 1f);
         InvokeRepeating("IncreaseScoreMultiplier", 10f, 10f);
@@ -93,8 +99,9 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             ShowAd();
+            gameOverMoneyText.text = $" + {coins}";
             gameOverScreen.GetComponent<GameOver>().ActivateGameOver();
-            gameManager.GetComponent<GameProperties>().IncreaseMoney(coins);
+            gameProperties.GetComponent<GameProperties>().IncreaseMoney(coins);
             endScoreText.text = $"Score: {score}";
             gameObject.SetActive(false);
             ES3AutoSaveMgr.Current.Save();
@@ -115,16 +122,16 @@ public class Player : MonoBehaviour
 
     public void RewardDoubleCoins()
     {
-        gameManager.GetComponent<GameProperties>().IncreaseMoney(coins);
+        gameProperties.GetComponent<GameProperties>().IncreaseMoney(coins);
         ES3AutoSaveMgr.Current.Save();
     }
 
     void ShowAd()
     {
-        if (gameManager.GetComponent<GameProperties>().playthroughs >= 3)
+        if (gameManager.GetComponent<GameManager>().playthroughs >= 3)
         {
             adManager.GetComponent<InterstitialAd>().ShowAd();
-            gameManager.GetComponent<GameProperties>().playthroughs = 0;
+            gameManager.GetComponent<GameManager>().playthroughs = 0;
         }
     }
 }

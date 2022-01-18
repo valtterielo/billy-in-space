@@ -5,9 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    [SerializeField] bool _startScreenActive = true;
-    [SerializeField] bool _playerActive = false;
-    [SerializeField] bool _spawnerControllerActive = false;
+    bool _startScreenActive = true;
+    bool _playerActive = false;
+    bool _spawnerControllerActive = false;
+    int _playThroughs = 0;
 
     public bool startScreenActive
     {
@@ -23,6 +24,11 @@ public class GameManager : MonoBehaviour
     {
         get { return _spawnerControllerActive; }
         set { _spawnerControllerActive = value; }
+    }
+    public int playthroughs
+    {
+        get { return _playThroughs; }
+        set { _playThroughs = value; }
     }
 
     void Start()
